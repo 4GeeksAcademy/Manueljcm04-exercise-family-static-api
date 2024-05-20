@@ -63,6 +63,30 @@ def handle_get_member(id_member):
     
     return jsonify(response), 200
 
+@app.route('/members/<int:id_member>', methods=['DELETE'])
+def handle_delete_member(id_member):
+    member = jackson_family.get_member(id_member)
+
+    if member is None:
+        return jsonify({ 'err': 'member not found'}), 404
+
+    jackson_family.delete_member(id_member)
+    return jsonify({'message': 'Member deleted successfully'}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+@app.route('/members', methods=['POST'])
+def handle_add_member():
+    data = request.json
+#añadir json
+    
+    return jsonify({'message': 'Member added successfully'}), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
