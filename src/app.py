@@ -80,9 +80,13 @@ if __name__ == '__main__':
 @app.route('/members', methods=['POST'])
 def handle_add_member():
     data = request.json
-#añadir json
+    jackson_family.add_member(data)
+    response_body = {}
     
-    return jsonify({'message': 'Member added successfully'}), 201
+    members = jackson_family.get_all_members()
+    response_body["message"] = "Add it!"
+    response_body["results"] = members
+    return response_body, 200
 
 if __name__ == '__main__':
     app.run(debug=True)
